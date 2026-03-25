@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#F9F6EE" />
+
+    <title>Khalid Food</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #f9f6ee;
+        --text: #111111;
+        --accent: #8b1a1a;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+          "Apple Color Emoji", "Segoe UI Emoji";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .page {
+        position: absolute;
+        inset: 0;
+        transition: transform 400ms ease-in-out, opacity 400ms ease-in-out;
+        will-change: transform, opacity;
+        overflow-y: hidden;
+      }
+
+      .page--shown {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+        overflow-y: auto;
+      }
+
+      .page--hidden-up {
+        transform: translateY(-24px);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .page--hidden-down {
+        transform: translateY(24px);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .page {
+          transition: none;
+        }
+
+        .page--hidden-up,
+        .page--hidden-down {
+          transform: none;
+        }
+      }
+
+      .tap-target {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+
+      .tap-target:focus-visible {
+        outline: 2px solid #8b1a1a;
+        outline-offset: 3px;
+      }
+
+      .no-drag {
+        -webkit-user-drag: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="app"
+      class="relative overflow-hidden min-h-[100dvh] bg-[var(--bg)]"
+      role="application"
+      aria-label="Khalid Food website"
+    >
+      <!-- Landing -->
+      <section id="landing" class="page page--shown" aria-hidden="false">
+        <div class="mx-auto w-full max-w-[1120px] h-full px-5 py-5 sm:px-7 sm:py-7 lg:px-10 lg:py-9 flex flex-col">
+          <!-- Top-left logo block -->
+          <div class="flex items-start">
+            <div class="flex items-start gap-2">
+              <svg
+                aria-hidden="true"
+                class="h-5 w-5 accent mt-1"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M7 3v6" />
+                <path d="M10 3v6" />
+                <path d="M7 9h3l-1.5 12" />
+                <path d="M14 3v6a4 4 0 0 0 4 4h1v8" />
+              </svg>
+
+              <div>
+                <div class="text-xl md:text-2xl font-bold accent tracking-tight">Khalid Food</div>
+                <div class="text-[11px] md:text-sm text-black/70 lowercase leading-snug">
+                  khalid food — care packages delivered every saturday
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center meat image + CTA -->
+          <div class="flex-1 flex flex-col items-center justify-center">
+            <button
+              id="openMenuFromImage"
+              type="button"
+              class="tap-target inline-flex items-center justify-center"
+              aria-label="Open the menu"
+            >
+              <img
+                class="no-drag w-[18rem] sm:w-[22rem] lg:w-[30rem] h-auto max-h-[38vh] sm:max-h-[42vh] object-contain transition-transform duration-300 hover:scale-[1.02]"
+                alt="Minced beef"
+                src="file:///Users/bobi/.cursor/projects/Users-bobi-khalid-food/assets/Beef_Meat_Cuts_Tenderloin_Feather_Blade-ac8205df-0732-4e46-8980-904ac6a4b61d.png"
+              />
+            </button>
+
+            <button
+              id="openMenuFromCTA"
+              type="button"
+              class="tap-target mt-5 text-sm md:text-base text-black/80 hover:text-black font-medium underline decoration-black/35 hover:decoration-black/70 underline-offset-4"
+            >
+              open the menu
+            </button>
+          </div>
+
+          <!-- Bottom bar -->
+          <div class="flex items-end justify-between gap-6 pt-4 pb-[env(safe-area-inset-bottom)]">
+            <a
+              class="text-sm text-black/80 hover:text-black"
+              href="https://wa.me/31630222893"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              whatsapp
+            </a>
+
+            <div class="text-[11px] md:text-sm text-black/70 leading-tight text-right">
+              <span>local, halal and fresh delivery .</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Menu -->
+      <section id="menu" class="page page--hidden-down" aria-hidden="true">
+        <div class="mx-auto w-full max-w-[1120px] h-full px-5 py-5 sm:px-7 sm:py-7 lg:px-10 lg:py-9 flex flex-col">
+          <!-- Back button -->
+          <div class="pt-1">
+            <button
+              id="backToLanding"
+              type="button"
+              class="tap-target text-sm text-black/80 hover:text-black font-medium flex items-center gap-2"
+            >
+              <span class="text-lg leading-none">←</span>
+              <span>back</span>
+            </button>
+          </div>
+
+          <!-- Menu grid -->
+          <div class="flex-1 flex flex-col justify-start pt-9 md:pt-12">
+            <div class="grid grid-cols-2 gap-x-8 sm:gap-x-10 md:gap-x-16 gap-y-8">
+              <div>
+                <div class="font-semibold text-sm md:text-base text-black/90 tracking-tight">Meat</div>
+                <ul class="mt-4 space-y-3">
+                  <li class="text-[14px] md:text-[15px] text-black/80">Beef Wok</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Sausages</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Minced Beef</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Chicken Fillet</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Chicken Thigh</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Marinated Chicken Wings</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Steak</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Leg of Lamb</li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="font-semibold text-sm md:text-base text-black/90 tracking-tight">Not Meat</div>
+                <ul class="mt-4 space-y-3">
+                  <li class="text-[14px] md:text-[15px] text-black/80">Fresh Bread</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">12 Eggs</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Greek Yoghurt</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Olives</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Hummus</li>
+                  <li class="text-[14px] md:text-[15px] text-black/80">Almaika Wraps</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        const landing = document.getElementById("landing");
+        const menu = document.getElementById("menu");
+
+        const openMenuFromImage = document.getElementById("openMenuFromImage");
+        const openMenuFromCTA = document.getElementById("openMenuFromCTA");
+        const backToLanding = document.getElementById("backToLanding");
+
+        let state = "landing";
+
+        function setInert(el, value) {
+          if (!el) return;
+          // `inert` is supported in modern browsers and prevents focus/interaction.
+          // If unsupported, we fall back to aria-hidden + pointer-events from CSS.
+          try {
+            if (value) el.setAttribute("inert", "");
+            else el.removeAttribute("inert");
+          } catch (_) {}
+        }
+
+        function showMenu() {
+          if (state === "menu") return;
+
+          landing.classList.remove("page--shown");
+          landing.classList.add("page--hidden-up");
+          landing.setAttribute("aria-hidden", "true");
+          setInert(landing, true);
+
+          menu.classList.remove("page--hidden-down");
+          menu.classList.add("page--shown");
+          menu.setAttribute("aria-hidden", "false");
+          setInert(menu, false);
+
+          state = "menu";
+        }
+
+        function showLanding() {
+          if (state === "landing") return;
+
+          menu.classList.remove("page--shown");
+          menu.classList.add("page--hidden-down");
+          menu.setAttribute("aria-hidden", "true");
+          setInert(menu, true);
+
+          landing.classList.remove("page--hidden-up");
+          landing.classList.add("page--shown");
+          landing.setAttribute("aria-hidden", "false");
+          setInert(landing, false);
+
+          state = "landing";
+        }
+
+        if (openMenuFromImage) openMenuFromImage.addEventListener("click", showMenu);
+        if (openMenuFromCTA) openMenuFromCTA.addEventListener("click", showMenu);
+        if (backToLanding) backToLanding.addEventListener("click", showLanding);
+
+        // Initial ARIA/state sanity (in case of future edits).
+        if (state === "landing") {
+          landing.setAttribute("aria-hidden", "false");
+          menu.setAttribute("aria-hidden", "true");
+          setInert(landing, false);
+          setInert(menu, true);
+        }
+      })();
+    </script>
+  </body>
+</html>
